@@ -1,0 +1,24 @@
+// sql 90percentile
+SELECT  SUBSTRING_INDEX(
+            SUBSTRING_INDEX(
+                GROUP_CONCAT(                 -- 1) make a sorted list of values
+                    f.length
+                    ORDER BY f.length
+                    SEPARATOR ','
+                )
+            ,   ','                           -- 2) cut at the comma
+            ,   90/100 * COUNT(*) + 1         --    at the position beyond the 90% portion
+            )
+        ,   ','                               -- 3) cut at the comma
+        ,   -1                                --    right after the desired list entry
+        )                 AS `90th Percentile`
+FROM    sakila.film AS f
+=================================================================
+// greping from xml
+grep String r2phpresponse2.xml | awk 'BEGIN {FS=">"} /1/ {print $2}' | awk 'BEGIN {FS="<"} /1/ {print $1}'
+grep String r2phpresponse2.xml | awk 'BEGIN {FS=">"} {print $2}' | awk 'BEGIN {FS="<"} {print $1}'
+grep fb r2phpresponse2.xml | awk 'BEGIN {FS=">"} {print $2}' | awk 'BEGIN {FS="<"} {print $1}'
+grep String r3phpresponse2.xml|cut -c42-83|sed "s/<//g" >R3php.csv
+=================================================================
+// from git bash ssh and run command remote and save to local file output
+"%PROGRAMFILES%\Git\bin\sh.exe" --login -i -c "ssh user@host commandToRunRemote" > output.txt 
