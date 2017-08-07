@@ -1,1 +1,1 @@
-db.conversationContext.find({ _id:{ $regex:/fb/} }).sort({_id:1})
+db.conversationContext.find({ _id:{ $regex:/R16-/} }).sort({_id:1}).count()
